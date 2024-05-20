@@ -92,7 +92,9 @@ public class SecurityConfig {
                 .authorizationGrantType(AuthorizationGrantType.AUTHORIZATION_CODE)
                 .authorizationGrantType(AuthorizationGrantType.REFRESH_TOKEN)
                 .authorizationGrantType(AuthorizationGrantType.CLIENT_CREDENTIALS)
+                // authorization server redirects after successful authentication.
                 .redirectUri("http://127.0.0.1:8080/login/oauth2/code/client")
+                // auth server redirects after the success logout by the user
                 .postLogoutRedirectUri("http://127.0.0.1:8080/")
                 .scope(OidcScopes.OPENID)
                 .scope(OidcScopes.PROFILE)
