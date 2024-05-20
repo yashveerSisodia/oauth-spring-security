@@ -62,7 +62,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
+  /*  @Bean
     @Order(2)
     public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(request -> request.anyRequest().authenticated())
@@ -70,7 +70,21 @@ public class SecurityConfig {
                 // authorization server filter chain
                 .formLogin(Customizer.withDefaults());
         return http.build();
-    }
+    }*/
+
+  @Bean
+  @Order(2)
+  public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+      http.authorizeHttpRequests(request -> request.requestMatchers("/login", "/signup", "/forgot-password", "/forgot-password-submit", "/reset-password", "/reset-password-submit").permitAll()
+                      .anyRequest().authenticated())
+              // Form login handles the redirect to the login page from the
+              // authorization server filter chain
+              .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
+                      .loginPage("/login")
+                      .failureUrl("/login?error=true")
+                      .permitAll());
+      return http.build();
+  }
 
     @Bean
     public UserDetailsService userDetailsService() {
