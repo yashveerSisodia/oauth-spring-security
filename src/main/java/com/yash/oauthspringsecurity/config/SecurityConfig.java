@@ -75,13 +75,14 @@ public class SecurityConfig {
   @Bean
   @Order(2)
   public SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-      http.authorizeHttpRequests(request -> request.requestMatchers("/login", "/signup", "/forgot-password", "/forgot-password-submit", "/reset-password", "/reset-password-submit").permitAll()
+      http.authorizeHttpRequests(request -> request.requestMatchers( "/login", "/signup", "/forgot-password", "/forgot-password-submit", "/reset-password", "/reset-password-submit").permitAll()
                       .anyRequest().authenticated())
               // Form login handles the redirect to the login page from the
               // authorization server filter chain
               .formLogin(httpSecurityFormLoginConfigurer -> httpSecurityFormLoginConfigurer
                       .loginPage("/login")
                       .failureUrl("/login?error=true")
+//                      .defaultSuccessUrl("/", true)
                       .permitAll());
       return http.build();
   }
